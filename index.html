@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <style>
+      .active-tab {
+        text-decoration: underline;
+        text-underline-offset: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="nav navbar navbar-light navbar-expand-lg bg-light">
+      <div class="nav-item mx-auto navbar-brand d-md-inline d-none">
+        <i class="fa-solid fa-music"> Music</i>
+      </div>
+      <div class="d-flex gap-5 mx-auto fa-solid py-3">
+        <a href="#" id="-tab" class="nav-link active-tab text-dark">
+          <i class="fa-solid fa-magnifying-glass d-inline d-sm-none"></i>
+          <p class="d-none d-sm-inline">Discover</p>
+        </a>
+        <a href="#" id="-tab" class="nav-link text-dark">
+          <i class="fa-solid fa-headphones d-inline d-sm-none"></i>
+          <p class="d-none d-sm-inline">My Playlist</p>
+        </a>
+        <a href="#" id="-tab" class="nav-link text-dark">
+          <i class="fa-solid fa-cart-shopping d-inline d-sm-none"></i>
+          <p class="d-none d-sm-inline">Cart</p>
+        </a>
+      </div>
+    </nav>
+    <div class="container my-3" style="max-width: 768px">
+      <div id="discover" class="row g-4">
+        <!-- Songs in discover will appear here -->
+      </div>
+    </div>
+    <div class="container my-3">
+      <div class="card p-3">
+        <audio id="audio-player" controls class="w-100">
+          <source src="audio/sample.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+      </div>
+    </div>
+  </body>
+  <script
+    src="https://kit.fontawesome.com/8389c11fa9.js"
+    crossorigin="anonymous"
+  ></script>
+  <script src="js/songs.js"></script>
+  <script src="js/disvover.js"></script>
+</html>
