@@ -3,53 +3,120 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>Spotifly</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
     <style>
+      body {
+        padding-bottom: 100px;
+      }
+
       .active-tab {
         text-decoration: underline;
         text-underline-offset: 10px;
+      }
+
+      #discover-div,
+      #playlist-div,
+      #queue-div {
+        max-width: 1024px;
+      }
+
+      .album-art {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
       }
     </style>
   </head>
   <body>
     <nav class="nav navbar navbar-light navbar-expand-lg bg-light">
       <div class="nav-item mx-auto navbar-brand d-md-inline d-none">
-        <i class="fa-solid fa-music"> Music</i>
+        <i class="fa-solid fa-music"> Spotifly</i>
       </div>
       <div class="d-flex gap-5 mx-auto fa-solid py-3">
-        <a href="#" id="-tab" class="nav-link active-tab text-dark">
-          <i class="fa-solid fa-magnifying-glass d-inline d-sm-none"></i>
+        <a href="#" id="discover-tab" class="nav-link active-tab text-dark">
+          <i
+            title="Discover"
+            class="fa-solid fa-magnifying-glass d-inline d-sm-none"
+          ></i>
           <p class="d-none d-sm-inline">Discover</p>
         </a>
-        <a href="#" id="-tab" class="nav-link text-dark">
-          <i class="fa-solid fa-headphones d-inline d-sm-none"></i>
+        <a href="#" id="playlist-tab" class="nav-link text-dark">
+          <i
+            title="My Playlist"
+            class="fa-solid fa-headphones d-inline d-sm-none"
+          ></i>
           <p class="d-none d-sm-inline">My Playlist</p>
         </a>
-        <a href="#" id="-tab" class="nav-link text-dark">
-          <i class="fa-solid fa-cart-shopping d-inline d-sm-none"></i>
-          <p class="d-none d-sm-inline">Cart</p>
+        <a href="#" id="queue-tab" class="nav-link text-dark">
+          <i title="Queue" class="fa-solid fa-list d-inline d-sm-none"></i>
+          <p class="d-none d-sm-inline">Queue</p>
         </a>
       </div>
     </nav>
-    <div class="container my-3" style="max-width: 768px">
+    <div id="discover-div" class="container my-3">
       <div id="discover" class="row g-4">
         <!-- Songs in discover will appear here -->
       </div>
     </div>
-    <div class="container my-3">
-      <div class="card p-3">
-        <audio id="audio-player" controls class="w-100">
-          <source src="audio/sample.mp3" type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
+
+    <div id="playlist-div" class="container"></div>
+
+    <div id="queue-div" class="container"></div>
+  </body>
+  <footer class="rounded-5 fixed-bottom">
+    <audio id="audio-player" class="d-none" controls><source type="audio/mpeg" src="" /></audio>
+    <div class="d-flex align-items-center bg-white p-3 gap-3">
+      <div>
+        <img
+          class="rounded img-fluid"
+          src=""
+          alt="Album Art"
+          style="width: 60px; height: 60px; object-fit: cover"
+        />
+      </div>
+      <ul class="list-unstyled m-0">
+        <li><h6 class="mb-0">Song Name</h6></li>
+        <li><p class="mb-0 text-muted small">Artist Name</p></li>
+      </ul>
+      <div class="flex-grow-1 d-flex flex-column">
+        <div class="d-flex align-items-center justify-content-between mb-1">
+          <span class="small text-muted">0:00</span>
+          <div class="d-flex gap-3">
+            <span class="fa-solid fa-backward fs-5 cursor-pointer"></span>
+            <span class="fa-solid fa-play fs-5 cursor-pointer"></span>
+            <span class="fa-solid fa-forward fs-5 cursor-pointer"></span>
+          </div>
+          <span class="small text-muted">0:00</span>
+        </div>
+        <div
+          class="progress mb-2"
+          role="progressbar"
+          aria-label="Basic example"
+          aria-valuenow="50"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          <div class="progress-bar bg-secondary" style="width: 100%"></div>
+        </div>
+      </div>
+      <div>
+        <input
+          type="range"
+          class="form-range ms-3"
+          min="0"
+          max="1"
+          step="0.01"
+          id="volume"
+          style="width: 100px"
+        />
       </div>
     </div>
-  </body>
+  </footer>
   <script
     src="https://kit.fontawesome.com/8389c11fa9.js"
     crossorigin="anonymous"
   ></script>
   <script src="js/songs.js"></script>
-  <script src="js/disvover.js"></script>
+  <script src="js/discover.js"></script>
 </html>
