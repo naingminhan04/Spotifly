@@ -56,8 +56,8 @@ const songs = [
   {
     title: "Hope Is The Thing With Feathers",
     artist: "Robin, HOYO-MIX, Chevy",
-    img: "art/Hope Is The Thing With Feathers.jpg",
-    audio: "songs/Hope Is The Thing With Feathers.mp3",
+    img: "art/Hope Is the Thing With Feathers.jpg",
+    audio: "songs/Hope Is the Thing With Feathers.mp3",
   },
   {
     title: "Sway Tal",
