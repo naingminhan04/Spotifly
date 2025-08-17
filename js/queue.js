@@ -40,6 +40,8 @@ function playCurrentSong() {
 
   const song = queueSongs[currentIndex];
   playSong(song);
+  audioElement.currentTime = 0;
+  footPlayBtn.classList.replace("fa-play", "fa-pause");
 
   updateQueueUI();
 }
@@ -76,8 +78,9 @@ delQueueBtn.addEventListener("click", () => {
   footerImg.classList.replace("d-flex", "d-none");
   footerArtist.textContent = "";
   footerSong.textContent = "";
-  volume.classList.remove("d-lg-flex");
-  document.querySelector('audio').pause();
+  volumeIcon.classList.remove("d-lg-flex");
+  volumeBar.classList.remove("d-lg-flex");
+  audioElement.pause();
   footPlayBtn.classList.replace("fa-pause", "fa-play");
   toggleBtn();
   queueRender();

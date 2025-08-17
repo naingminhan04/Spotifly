@@ -51,7 +51,7 @@ function createSongCard(song) {
   const addBtn = document.createElement("button");
   addBtn.classList = "btn btn-outline-secondary btn-sm";
   addBtn.innerHTML =
-    '<i class="fa-solid fa-plus"> <span class="d-lg-none">Add</span></i>';
+    '<i class="fa-solid fa-plus"> Add</i>';
   addBtn.addEventListener("click", () => addSong(song, addBtn));
 
   btnContainer.appendChild(playBtn);
@@ -77,7 +77,13 @@ const footerArtist = document.querySelector("#footer-artist");
 const footerSong = document.querySelector("#footer-song");
 const footPlayBtn = document.querySelector("#foot-play-btn");
 
-const volume = document.querySelector("#volume");
+const volumeBar = document.querySelector("#volume-ctrl");
+const volumeIcon = document.querySelector('#volume-icon');
+
+const progress = document.querySelector('#progress');
+const currentTimeSpan = document.querySelector('#current-time');
+const fullTimeSpan = document.querySelector('#full-time');
+const audioElement = document.querySelector("audio");
 
 function playSong(song) {
   const audioElement = document.querySelector("audio");
@@ -99,19 +105,22 @@ function playSong(song) {
   footerImg.classList.replace("d-none", "d-flex");
   footerArtist.textContent = song.artist;
   footerSong.textContent = song.title;
-  volume.classList.add("d-lg-flex");
+  volumeBar.classList.add("d-lg-flex");
+  volumeIcon.classList.add("d-lg-flex")
 
-  audioElement.addEventListener("ended", () => {
-    currentIndex++;
-    if (currentIndex >= queueSongs.length) {
-      footPlayBtn.classList.replace("fa-pause", "fa-play");
-    }
-
-    playCurrentSong();
-  });
   updateQueueUI();
   toggleBtn();
 }
+
+audioElement.addEventListener("ended", () => {
+    if (currentIndex >= queueSongs.length-1) {
+      footPlayBtn.classList.replace("fa-pause", "fa-play");
+      return
+    }
+    currentIndex++;
+
+    playCurrentSong();
+  });
 
 footPlayBtn.addEventListener("click", () => {
   const audioElement = document.querySelector("audio");
@@ -145,3 +154,35 @@ document.querySelectorAll(".nav-link").forEach((link) => {
     document.querySelector(`#${newTabId}`).classList.remove("d-none");
   });
 });
+
+function minSec(seconds) {
+  const min = Math.floor(seconds/60);
+  const sec = Math.floor(seconds % 60);
+  return `${min}:${sec < 10 ? 0 : ""}${sec}`;
+}
+
+audioElement.addEventListener('loadedmetadata',() => {
+  progress.max = Math.floor(audioElement.duration);
+  fullTimeSpan.textContent = minSec(audioElement.duration);
+})
+
+audioElement.addEventListener('timeupdate', () => {
+  const progPercent = (audioElement.currentTime/audioElement.duration) * 100;
+  progress.value = Math.floor(audioElement.currentTime);
+  progress.style.setProperty('--progress',progPercent + '%');
+  currentTimeSpan.textContent = minSec(audioElement.currentTime);
+})
+
+progress.addEventListener("input", () => {
+  currentTimeSpan.textContent = minSec(progress.value);
+});
+
+progress.addEventListener("change", () => {
+  audioElement.currentTime = progress.value;
+});
+
+volumeBar.addEventListener("input", ()=> {
+  const volPercent = (volumeBar.value) * 100
+  audioElement.volume = volumeBar.value;
+  volumeBar.style.setProperty('--progress',volPercent + '%');
+})
