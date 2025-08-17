@@ -37,16 +37,16 @@ function createSongCard(song) {
   playBtn.classList = "btn btn-dark btn-sm";
   playBtn.innerHTML = '<i class="fa-solid fa-play"> Play</i>';
   playBtn.addEventListener("click", () => {
-  if (queueSongs.length === 0) {
-    queueSongs.push(song);
-    currentIndex = 0;
-    playSong(song);
-  } else {
-    queueSongs[currentIndex] = song;
-    playSong(song);
-  }
-  queueRender();
-});
+    if (queueSongs.length === 0) {
+      queueSongs.push(song);
+      currentIndex = 0;
+      playSong(song);
+    } else {
+      queueSongs[currentIndex] = song;
+      playSong(song);
+    }
+    queueRender();
+  });
 
   const addBtn = document.createElement("button");
   addBtn.classList = "btn btn-outline-secondary btn-sm";
@@ -101,6 +101,14 @@ function playSong(song) {
   footerSong.textContent = song.title;
   volume.classList.add("d-lg-flex");
 
+  audioElement.addEventListener("ended", () => {
+    currentIndex++;
+    if (currentIndex >= queueSongs.length) {
+      footPlayBtn.classList.replace("fa-pause", "fa-play");
+    }
+
+    playCurrentSong();
+  });
   updateQueueUI();
   toggleBtn();
 }
