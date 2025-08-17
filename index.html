@@ -27,11 +27,16 @@
         object-fit: cover;
       }
 
+      .playing{
+        background-color: lightgreen;
+        font-weight: bold;
+      }
+
       #volume {
-        -webkit-appearance: none; /* Remove default */
+        -webkit-appearance: none;
         width: 100px;
         height: 0px;
-        background: #535353; /* Spotify-like track color */
+        background: #535353;
         border-radius: 10px;
         cursor: pointer;
       }
@@ -91,15 +96,22 @@
         </a>
       </div>
     </nav>
-    <div id="discover-div" class="container my-3">
+    <div id="discover-div" class="container my-3 tab-content">
       <div id="discover" class="row g-4">
         <!-- Songs in discover will appear here -->
       </div>
     </div>
 
-    <div id="playlist-div" class="container"></div>
+    <div id="playlist-div" class="container tab-content"></div>
 
-    <div id="queue-div" class="container"></div>
+    <div id="queue-div" class="container tab-content d-none">
+      <button id="del-queue-btn" class="container d-flex btn-dark my-4"  style="cursor: not-allowed;"disabled>
+        <span class="mx-auto">Delete All Queued Songs?</span>
+      </button>
+      <ul id="queue-ul" class="list-group">
+        <!--queueSongs will appear here -->
+      </ul>
+    </div>
   </body>
   <footer class="rounded-5 fixed-bottom">
     <audio id="audio-player" class="d-none" controls>
@@ -181,4 +193,6 @@
   ></script>
   <script src="js/songs.js"></script>
   <script src="js/discover.js"></script>
+  <script src="js/queue.js"></script>
+  <script src="js/playlist.js"></script>
 </html>

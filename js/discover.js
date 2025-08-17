@@ -10,7 +10,7 @@ function addDiscover() {
 
 function createSongCard(song) {
   const col = document.createElement("div");
-  col.classList = "col-12 col-sm-6 col-md-4 col-lg-3";
+  col.classList = "col-sm-6 col-md-4 col-lg-3";
 
   const card = document.createElement("div");
   card.classList = "card h-100 d-flex flex-column";
@@ -36,13 +36,23 @@ function createSongCard(song) {
   const playBtn = document.createElement("button");
   playBtn.classList = "btn btn-dark btn-sm";
   playBtn.innerHTML = '<i class="fa-solid fa-play"> Play</i>';
-  playBtn.addEventListener("click", () => playSong(song, playBtn));
+  playBtn.addEventListener("click", () => {
+  if (queueSongs.length === 0) {
+    queueSongs.push(song);
+    currentIndex = 0;
+    playSong(song);
+  } else {
+    queueSongs[currentIndex] = song;
+    playSong(song);
+  }
+  queueRender();
+});
 
   const addBtn = document.createElement("button");
   addBtn.classList = "btn btn-outline-secondary btn-sm";
   addBtn.innerHTML =
     '<i class="fa-solid fa-plus"> <span class="d-lg-none">Add</span></i>';
-  addBtn.addEventListener("click", () => addSong(song));
+  addBtn.addEventListener("click", () => addSong(song, addBtn));
 
   btnContainer.appendChild(playBtn);
   btnContainer.appendChild(addBtn);
@@ -69,47 +79,61 @@ const footPlayBtn = document.querySelector("#foot-play-btn");
 
 const volume = document.querySelector("#volume");
 
-function playSong(song, playBtn) {
+function playSong(song) {
   const audioElement = document.querySelector("audio");
   const sourceElement = audioElement.querySelector("source");
 
-  sourceElement.src = song.audio;
-
-  if (currentButton === playBtn) {
-    if (audioElement.paused) {
-      audioElement.play();
-      playBtn.innerHTML = '<i class="fa-solid fa-pause"> Pause</i>';
-      footPlayBtn.classList.replace("fa-play", "fa-pause");
-    } else {
-      audioElement.pause();
-      playBtn.innerHTML = '<i class="fa-solid fa-play">Play</i>';
-      footPlayBtn.classList.replace("fa-pause", "fa-play");
-    }
-    return;
+  if (currentSong !== song) {
+    sourceElement.src = song.audio;
+    audioElement.load();
+    audioElement.play();
+    footPlayBtn.classList.replace("fa-play", "fa-pause");
+  } else {
+    audioElement.play();
+    footPlayBtn.classList.replace("fa-play", "fa-pause");
   }
 
-  if (currentButton) {
-    currentButton.innerHTML = '<i class="fa-solid fa-play">Play</i>';
-  }
-
-  audioElement.load();
-  audioElement.play();
-
-  playBtn.innerHTML = '<i class="fa-solid fa-pause"> Pause</i>';
-  footPlayBtn.classList.remove("fa-play");
-  footPlayBtn.classList.add("fa-pause");
-
-  currentButton = playBtn;
   currentSong = song;
 
-  footerImg.src = currentSong.img;
+  footerImg.src = song.img;
   footerImg.classList.replace("d-none", "d-flex");
-  footerArtist.textContent = currentSong.artist;
-  footerSong.textContent = currentSong.title;
+  footerArtist.textContent = song.artist;
+  footerSong.textContent = song.title;
   volume.classList.add("d-lg-flex");
+
+  updateQueueUI();
+  toggleBtn();
 }
 
 footPlayBtn.addEventListener("click", () => {
-  if (!currentButton || !currentSong) return;
-  playSong(currentSong, currentButton);
+  const audioElement = document.querySelector("audio");
+  if (!currentSong) return;
+
+  if (audioElement.paused) {
+    audioElement.play();
+    footPlayBtn.classList.replace("fa-play", "fa-pause");
+  } else {
+    audioElement.pause();
+    footPlayBtn.classList.replace("fa-pause", "fa-play");
+  }
+});
+
+const discoverTab = document.querySelector("#discover-tab");
+const playlistTab = document.querySelector("#playlist-tab");
+const queueTab = document.querySelector("#queue-tab");
+
+document.querySelectorAll(".nav-link").forEach((link) => {
+  link.addEventListener("click", () => {
+    document
+      .querySelectorAll(".nav-link")
+      .forEach((a) => a.classList.remove("active-tab"));
+    link.classList.add("active-tab");
+
+    document
+      .querySelectorAll(".tab-content")
+      .forEach((content) => content.classList.add("d-none"));
+
+    const newTabId = link.id.replace("-tab", "-div");
+    document.querySelector(`#${newTabId}`).classList.remove("d-none");
+  });
 });
