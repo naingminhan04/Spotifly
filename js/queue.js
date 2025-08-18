@@ -10,12 +10,13 @@ function queueRender() {
   queueSongs.forEach((song, index) => {
     const li = document.createElement("li");
     li.textContent = `${song.title} - ${song.artist}`;
-    li.classList.add("list-group-item");
+    li.classList.add("list-group-item","py-2","mb-2");
     if (index === currentIndex) {
       li.classList.add("playing");
     }
     queueUl.appendChild(li);
   });
+  updateQueueUI();
 }
 
 function addSong(song, addBtn) {
@@ -43,7 +44,7 @@ function playCurrentSong() {
   audioElement.currentTime = 0;
   footPlayBtn.classList.replace("fa-play", "fa-pause");
 
-  updateQueueUI();
+  queueRender();
 }
 
 function updateQueueUI() {
@@ -61,7 +62,7 @@ function updateQueueUI() {
 function toggleBtn() {
   if (queueSongs.length === 0) {
     delQueueBtn.disabled = true;
-    delQueueBtn.style.cursor = "No Songs In Queue";
+    delQueueBtn.style.cursor = "not-allowed";
   } else {
     delQueueBtn.disabled = false;
     delQueueBtn.classList.add("btn");
@@ -82,9 +83,9 @@ delQueueBtn.addEventListener("click", () => {
   volumeBar.classList.remove("d-lg-flex");
   audioElement.pause();
   footPlayBtn.classList.replace("fa-pause", "fa-play");
+  audioElement.currentTime = 0;
   toggleBtn();
   queueRender();
-  updateQueueUI();
 });
 
 document.querySelector(".fa-backward").addEventListener("click", () => {

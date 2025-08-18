@@ -66,7 +66,7 @@
         cursor: pointer;
         margin-top: -4px;
       }
-      
+
       #volume-ctrl {
         -webkit-appearance: none;
         appearance: none;
@@ -103,11 +103,14 @@
     </style>
   </head>
   <body>
-    <nav class="nav navbar navbar-light navbar-expand-lg bg-light">
+    <nav
+      class="nav navbar navbar-light navbar-expand-lg bg-light fixed-top"
+      style="height: 70px"
+    >
       <div class="nav-item mx-auto navbar-brand d-md-inline d-none">
         <i class="fa-solid fa-music"> Spotifly</i>
       </div>
-      <div class="d-flex gap-5 mx-auto fa-solid py-3">
+      <div class="d-flex gap-5 mx-auto fa-solid py-">
         <a href="#" id="discover-tab" class="nav-link active-tab text-dark">
           <i
             title="Discover"
@@ -128,15 +131,38 @@
         </a>
       </div>
     </nav>
-    <div id="discover-div" class="container my-3 tab-content">
+
+    <div
+      id="discover-div"
+      class="container tab-content"
+      style="margin-top: 75px"
+    >
       <div id="discover" class="row g-4">
         <!-- Songs in discover will appear here -->
       </div>
     </div>
 
-    <div id="playlist-div" class="container tab-content"></div>
+    <div
+      id="playlist-div"
+      class="container tab-content d-none"
+      style="margin-top: 75px"
+    >
+      <ul id="playlist-ul" class="list-group">
+        <li
+          id="new-playlist-btn"
+          class="list-group-item card d-flex align-items-center justify-content-center btn btn-light"
+          style="height: 200px"
+        >
+          <i class="fa-solid">Make A New Playlist</i>
+        </li>
+      </ul>
+    </div>
 
-    <div id="queue-div" class="container tab-content d-none">
+    <div
+      id="queue-div"
+      class="container tab-content d-none"
+      style="margin-top: 75px"
+    >
       <button
         id="del-queue-btn"
         class="container d-flex btn-dark my-4"
@@ -148,6 +174,51 @@
       <ul id="queue-ul" class="list-group">
         <!--queueSongs will appear here -->
       </ul>
+    </div>
+
+    <div
+      id="playlist-overlay"
+      class="d-none"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      "
+    >
+      <div
+        style="
+          background: white;
+          padding: 20px;
+          width: 90%;
+          max-width: 600px;
+          max-height: 60%;
+          overflow-y: scroll;
+          scrollbar-width:none;
+          border-radius: 10px;
+          position: relative;
+        "
+      >
+        <h5 id="overlay-title" class="d-flex justify-content-center m-2">Create Playlist</h5>
+        <ul id="overlay-song-list" class="list-group mb-3"></ul>
+        <input
+          type="text"
+          id="playlist-name"
+          placeholder="Playlist Name"
+          class="form-control mb-3"
+          required
+        />
+        <div class="d-flex justify-content-end gap-2">
+          <button id="cancel-playlist" class="btn btn-danger">Cancel</button>
+          <button id="save-playlist" class="btn btn-dark">Save</button>
+        </div>
+      </div>
     </div>
   </body>
   <footer class="rounded-5 fixed-bottom">
@@ -182,7 +253,7 @@
       </div>
       <div
         class="flex-grow-1 d-flex flex-column mx-auto col-lg-6"
-        style="max-width: 400px;"
+        style="max-width: 400px"
       >
         <div class="d-flex align-items-center justify-content-between mb-1">
           <span id="current-time" class="small text-muted">0:00</span>

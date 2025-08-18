@@ -108,7 +108,7 @@ function playSong(song) {
   volumeBar.classList.add("d-lg-flex");
   volumeIcon.classList.add("d-lg-flex")
 
-  updateQueueUI();
+    queueRender();
   toggleBtn();
 }
 
