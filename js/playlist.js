@@ -19,16 +19,12 @@ cancelPlaylistBtn.addEventListener("click", () => {
 });
 
 function openPlaylistOverlay() {
+  playlistNameInput.classList.remove("is-invalid", "border-danger");
   overlaySongList.innerHTML = "";
   songs.forEach((song, index) => {
     const li = document.createElement("li");
     li.classList.add("list-group-item");
-    li.innerHTML = `
-                    <input type="checkbox" class="btn-check" data-index="${index}" id="song-${index}" autocomplete="off">
-                    <label class="btn btn-outline-dark w-100 text-start" for="song-${index}">
-                        ${song.title} - ${song.artist}
-                    </label>
-`;
+    li.innerHTML = `<input type="checkbox" class="btn-check" data-index="${index}" id="song-${index}" autocomplete="off"><label class="btn btn-outline-dark w-100 text-start" for="song-${index}">${song.title} - ${song.artist}</label>`;
 
     if (
       editingPlaylistIndex !== null &&
